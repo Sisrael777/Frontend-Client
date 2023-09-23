@@ -13,8 +13,10 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7163/api/") });
 builder.Services.AddScoped<IProductoServices, ProductoServices>();
 builder.Services.AddScoped<IConsolaServices, ConsolaServices>();
-builder.Services.AddScoped<ICategoriaServices, CategoriaServices>();
+
 builder.Services.AddScoped<IArticuloServices, ArticuloServices>();
+
+builder.Services.AddScoped<ICategoriaServices,CategoriaServices>();
 
 builder.Services.AddMudServices();//Importacion de los servicios de MudBlazor
 await builder.Build().RunAsync();

@@ -6,5 +6,8 @@ namespace VideoDa.ClienteBlazor.Services
     {
 
         Task<IEnumerable<Categoria>> GetAll();
+
+
+
     }
 }

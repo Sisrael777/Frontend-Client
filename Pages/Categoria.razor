@@ -1,0 +1,41 @@
+﻿@page "/Categoria"
+@using Models
+@using Services
+
+@inject ICategoriaServices CategoriaService
+
+ <PageTitle>Categoria</PageTitle>
+
+<MudText Typo="Typo.h4">Articulos</MudText>
+@if (categorias == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <MudGrid>
+        @foreach (var item in categorias)
+        {
+            <MudItem xs="12" sm="10" md="6" lg="4">
+                <MudCard>
+                    <MudCardHeader Class="blue lighten-1">
+                       
+                    </MudCardHeader>
+                    
+                    <MudCardActions>
+                    
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+}
+
+@code {
+    IEnumerable<Categoria> categorias = new List<Categoria>();
+    protected override async Task OnInitializedAsync()
+    {
+        // categorias = await CategoriaService.GetAll();
+    }
+}
+ 
