@@ -1,41 +1,66 @@
-﻿﻿
-@page "/Juego/{id:int}"
+﻿@page "/Juego/{id:int}"
 @using Models
 @using Services
 @inject IProductoServices ProductoService
+@inject IConsolaServices ConsolaService
+@inject ICategoriaServices CategoriaService
 
-<MudText Typo="Typo.h5">Detalles de Juego</MudText>
+<MudContainer Class="nintendo-card">
+    <MudText Class="nintendo-title">Detalles de Juego</MudText>
 
-@if (producto == null)
-{
-    <p><em>Cargando...</em></p>
-}
-else
-{
-    <MudCard>
-        <MudCardHeader Class="blue lighten-2">
-            <CardHeaderContent>
-                <MudText Typo="Typo.h6">@producto.Nombre</MudText>
-            </CardHeaderContent>
-        </MudCardHeader>
-        <MudCardContent>
-            <MudText Typo="Typo.body2">@producto.Descripcion</MudText>
-        </MudCardContent>
-        <MudCardActions Class="center">
-            <img src="@producto.Imagen" alt="@producto.Nombre" Elevation="25" Class="rounded-lg" width="60%" height="auto" />
-        </MudCardActions>
-    </MudCard>
-}
+    @if (producto == null)
+    {
+        <p><em>Cargando...</em></p>
+    }
+    else
+    {
+        <div class="nintendo-game-details">
+            <div class="nintendo-game-image">
+                <img src="@producto.Imagen" alt="@producto.Nombre" class="rounded-lg" />
+            </div>
+            <div class="nintendo-game-content">
+                <MudText Typo="Typo.h5">@producto.Nombre</MudText>
+                <MudText Typo="Typo.h5">@consola.Nombre</MudText>
+                <MudText Typo="Typo.h5">@categoria.Nombre</MudText>
+                <MudText Class="nintendo-description">@producto.Descripcion</MudText>
+                <MudButton Href="/" Variant="Variant.Text" Color="Color.Primary">Volver</MudButton>
+            </div>
+        </div>
+    }
+</MudContainer>
+<style>
+    .nintendo-game-details {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .nintendo-game-image {
+        flex: 1;
+        padding: 16px;
+    }
+
+    .nintendo-game-content {
+        flex: 2;
+        padding: 16px;
+    }
+
+</style>
 
 @code {
     [Parameter]
     public int id { get; set; }
 
     Producto producto = new Producto();
+    Consola consola = new Consola();
+    Categoria categoria = new Categoria();
 
     protected override async Task OnInitializedAsync()
     {
         if (id > 0)
             producto = await ProductoService.GetById(id);
+        if (id > 0)
+            consola = await ConsolaService.GetById(id);
+         if (id > 0)
+             categoria = await CategoriaService.GetById(id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Microsoft.Extensions.Options;
+using System.Text.Json;
 using VideoDa.ClienteBlazor.Models;
 
 namespace VideoDa.ClienteBlazor.Services
@@ -11,14 +12,18 @@ namespace VideoDa.ClienteBlazor.Services
 
             _httpCliente = httpCliente;
         }
-
+        JsonSerializerOptions options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         public async Task<IEnumerable<Categoria>> GetAll()
         {
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             string resp = await _httpCliente.GetStringAsync($"Categoria");
             return JsonSerializer.Deserialize<IEnumerable<Categoria>>(resp, options);
 
 
+        }
+        public async Task<Categoria> GetById(int id)
+        {
+            string resp = await _httpCliente.GetStringAsync($"Categoria/{id}");
+            return JsonSerializer.Deserialize<Categoria>(resp, options);
         }
     }
 

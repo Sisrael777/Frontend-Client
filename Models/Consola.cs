@@ -9,6 +9,7 @@
        public string Imagen { get; set; }
        public string Fabricante { get; set; }
        public string AñodeLanzamiento { get; set;}
+        public string Precio { get; set; }
         public Producto Producto { get; set; }
 
         public bool EsFavorito { get; set; }

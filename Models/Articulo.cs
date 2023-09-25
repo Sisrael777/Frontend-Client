@@ -8,6 +8,8 @@
         public string Imagen { get; set; }
         public string Descripcion { get; set; }
 
+        public string Precio { get; set; }
+
         public bool EsFavorito { get; set; }
     }
 }
