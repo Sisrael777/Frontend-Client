@@ -12,6 +12,9 @@
         public string Precio { get; set;}
         public Categoria Categoria { get; set; }
         public Consola Consola { get; set; }
+
+        public bool EsFavorito { get; set; }
+
     }
     
 }

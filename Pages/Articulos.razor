@@ -3,6 +3,7 @@
 @using Services
 @inject IArticuloServices ArticuloService
 @inject IConsolaServices ConsolaService
+@inject IJSRuntime JSRuntime
 
 
 <PageTitle>Articulos</PageTitle>
@@ -46,9 +47,9 @@
                         </MudText>
                         <MudText Typo="Typo.body2">@item.Descripcion</MudText>
                         <MudCardActions>
-                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
-                            <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
-                            <MudButton Link="@($"/detalles/{item.Id}")" Variant="Variant.Outlined" Color="Color.Success">Detalles</MudButton>
+                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="@GetFavoriteColor(item)" OnClick="() => ToggleFavorite(item)" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" OnClick="() => Compartir(item)" />
+                            <MudButton Link="@($"/Articulo/{item.Id}")" Variant="Variant.Outlined" Color="Color.Success">Detalles</MudButton>
                         </MudCardActions>
                     </MudCard>
                 </MudItem>
@@ -65,5 +66,33 @@
     {
         consolas = await ConsolaService.GetAll();
         articulos = await ArticuloService.GetAll();
+    }
+    private Color GetFavoriteColor(Articulo articulo)
+    {
+        return articulo.EsFavorito ? Color.Error : Color.Default;
+    }
+
+    private void ToggleFavorite(Articulo articulo)
+    {
+        articulo.EsFavorito = !articulo.EsFavorito;
+    }
+
+    //funcion de compartir
+    private string GenerarUrlDetalle(Articulo articulo)
+    {
+        string urlDetalle = $"/Articulo/{articulo.Id}";
+        return urlDetalle;
+    }
+
+    private async void Compartir(Articulo articulo)
+    {
+        string urlDetalle = GenerarUrlDetalle(articulo);
+
+        await JSRuntime.InvokeVoidAsync("navigator.share", new
+        {
+            title = "Compartir Articulo",
+            text = articulo.Nombre,
+            url = urlDetalle
+        });
     }
 }

@@ -5,6 +5,7 @@
 @inject IProductoServices ProductoService
 @inject IConsolaServices ConsolaService
 @inject ICategoriaServices CategoriaService 
+@inject IJSRuntime JSRuntime
 
 
 <PageTitle>Consolas</PageTitle>
@@ -58,9 +59,9 @@
                         </MudText>
                         <MudText Typo="Typo.body2">@item.Descripcion</MudText>
                         <MudCardActions>
-                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
-                            <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
-                            <MudButton Link="@($"/detalles/{item.Id}")" Variant="Variant.Outlined" Color="Color.Success">Detalles</MudButton>
+                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="@GetFavoriteColor(item)" OnClick="() => ToggleFavorite(item)" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" OnClick="() => Compartir(item)" />
+                            <MudButton Link="@($"/Juego/{item.Id}")" Variant="Variant.Outlined" Color="Color.Success">Detalles</MudButton>
                         </MudCardActions>
                     </MudCard>
                 </MudItem>
@@ -71,7 +72,7 @@
 @code {
 
     IEnumerable<Producto> productos = new List<Producto>();
-     IEnumerable<Categoria> categorias = new List<Categoria>();
+    IEnumerable<Categoria> categorias = new List<Categoria>();
     IEnumerable<Consola> consolas = new List<Consola>();
 
     protected override async Task OnInitializedAsync()
@@ -79,5 +80,35 @@
         productos = await ProductoService.GetAll();
         consolas = await ConsolaService.GetAll();
         categorias = await CategoriaService.GetAll();
+    }
+
+    //funcionalidad  de favoritos
+    private Color GetFavoriteColor(Producto producto)
+    {
+        return producto.EsFavorito ? Color.Error : Color.Default;
+    }
+
+    private void ToggleFavorite(Producto producto)
+    {
+        producto.EsFavorito = !producto.EsFavorito;
+    }
+
+    //funcion de compartir 
+    private string GenerarUrlDetalle(Producto producto)
+    {
+        string urlDetalle = $"/Juego/{producto.Id}";
+        return urlDetalle;
+    }
+
+    private async void Compartir(Producto producto)
+    {
+        string urlDetalle = GenerarUrlDetalle(producto);
+
+        await JSRuntime.InvokeVoidAsync("navigator.share", new
+        {
+            title = "Compartir Producto",
+            text = producto.Nombre,
+            url = urlDetalle
+        });
     }
 }

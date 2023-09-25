@@ -10,5 +10,7 @@
        public string Fabricante { get; set; }
        public string AñodeLanzamiento { get; set;}
         public Producto Producto { get; set; }
+
+        public bool EsFavorito { get; set; }
     }
 }

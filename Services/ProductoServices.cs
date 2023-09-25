@@ -12,14 +12,18 @@ namespace VideoDa.ClienteBlazor.Services
 
             _httpCliente = httpCliente;
         }
-
+        JsonSerializerOptions options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         public async Task<IEnumerable<Producto>> GetAll()
         {
-           var optins = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             string resp = await _httpCliente.GetStringAsync($"Producto");
-            return JsonSerializer.Deserialize<IEnumerable<Producto>>(resp, optins);
+            return JsonSerializer.Deserialize<IEnumerable<Producto>>(resp, options);
 
 
+        }
+        public async Task<Producto> GetById(int id)
+        {
+            string resp = await _httpCliente.GetStringAsync($"Producto/{id}");
+            return JsonSerializer.Deserialize<Producto>(resp, options);
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿@page "/Consola"
-@using  Models
+@using Models
 @using Services
 
 @inject IConsolaServices ConsolaService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
 
 <PageTitle>Consolas</PageTitle>
 <MudContainer Height="100%" Width="100%">
-   
+
     <div style="display: flex; align-items: center; padding:10px">
         <MudLink Href="/">Home</MudLink>
         <MudText style="margin-left: 10px;">/  Consolas</MudText>
@@ -26,22 +28,22 @@
                 <MudItem xs="12" sm="10" md="6" lg="4">
                     <MudCard>
                         <MudCardHeader Class="blue darken-4">
-                            
+
                             <CardHeaderContent>
-                                <MudText  Style="color:white" Typo="Typo.h6">@item.Nombre</MudText>
+                                <MudText Style="color:white" Typo="Typo.h6">@item.Nombre</MudText>
                                 <MudText Style="color:white" Typo="Typo.body2">@item.Serie</MudText>
                             </CardHeaderContent>
-                           
+
                         </MudCardHeader>
                         <MudCardMedia Image="@item.Imagen" Height="250" />
                         <MudCardContent>
                             <MudText Typo="Typo.body2">@item.Fabricante™ @item.AñodeLanzamiento</MudText>
-                            <MudText  Typo="Typo.body2">@item.Descripcion</MudText>
+                            <MudText Typo="Typo.body2">@item.Descripcion</MudText>
                         </MudCardContent>
                         <MudCardActions>
-                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
-                            <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
-                            <MudButton Link="@($"/detalles/{item.Id}")" Variant="Variant.Outlined" Color="Color.Success">Detalles</MudButton>
+                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="@GetFavoriteColor(item)" OnClick="() => ToggleFavorite(item)" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" OnClick="() => Compartir(item)" />
+                            <MudButton Link="@($"/Consola/{item.Id}")" Variant="Variant.Outlined" Color="Color.Success">Detalles</MudButton>
                         </MudCardActions>
                     </MudCard>
                 </MudItem>
@@ -60,4 +62,33 @@
     {
         consolas = await ConsolaService.GetAll();
     }
+
+    private Color GetFavoriteColor(Consola consola)
+    {
+        return consola.EsFavorito ? Color.Error : Color.Default;
+    }
+
+    private void ToggleFavorite(Consola consola)
+    {
+        consola.EsFavorito = !consola.EsFavorito;
+    }
+
+    private string GenerarUrlDetalle(Consola consola)
+    {
+        string urlDetalle = $"/Consola/{consola.Id}";
+        return urlDetalle;
+    }
+
+    private async void Compartir(Consola consola)
+    {
+        string urlDetalle = GenerarUrlDetalle(consola);
+
+        await JSRuntime.InvokeVoidAsync("navigator.share", new
+        {
+            title = "Compartir Consola",
+            text = consola.Nombre,
+            url = urlDetalle
+        });
+    }
 }
+

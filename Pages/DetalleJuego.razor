@@ -1,0 +1,41 @@
+﻿﻿
+@page "/Juego/{id:int}"
+@using Models
+@using Services
+@inject IProductoServices ProductoService
+
+<MudText Typo="Typo.h5">Detalles de Juego</MudText>
+
+@if (producto == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <MudCard>
+        <MudCardHeader Class="blue lighten-2">
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@producto.Nombre</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudText Typo="Typo.body2">@producto.Descripcion</MudText>
+        </MudCardContent>
+        <MudCardActions Class="center">
+            <img src="@producto.Imagen" alt="@producto.Nombre" Elevation="25" Class="rounded-lg" width="60%" height="auto" />
+        </MudCardActions>
+    </MudCard>
+}
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    Producto producto = new Producto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id > 0)
+            producto = await ProductoService.GetById(id);
+    }
+}

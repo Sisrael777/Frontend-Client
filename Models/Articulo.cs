@@ -7,5 +7,7 @@
         public string Nombre { get; set; }
         public string Imagen { get; set; }
         public string Descripcion { get; set; }
+
+        public bool EsFavorito { get; set; }
     }
 }
