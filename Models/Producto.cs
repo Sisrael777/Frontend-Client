@@ -10,5 +10,8 @@
         public string Cantidad { get; set; }
         public string Imagen { get; set; }
         public string Precio { get; set;}
+        public Categoria Categoria { get; set; }
+        public Consola Consola { get; set; }
     }
+    
 }

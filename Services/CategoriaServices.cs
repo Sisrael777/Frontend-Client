@@ -1,24 +1,26 @@
-﻿using System.Net.Http;
-using System.Text.Json;
+﻿using System.Text.Json;
 using VideoDa.ClienteBlazor.Models;
 
 namespace VideoDa.ClienteBlazor.Services
 {
-    public class CategoriaServices : ICategoriaServices
+    public class CategoriaServices: ICategoriaServices
     {
-        //inyeccion de inde pendencias de httpCliente
-        private readonly HttpClient _httpClient;
-        public CategoriaServices(HttpClient httpClient)
+        private readonly HttpClient _httpCliente;
+        public CategoriaServices(HttpClient httpCliente)
         {
-            _httpClient = httpClient;
+
+            _httpCliente = httpCliente;
         }
 
         public async Task<IEnumerable<Categoria>> GetAll()
         {
-            var optins = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            string resp = await _httpClient.GetStringAsync($"Categoria");
-            return JsonSerializer.Deserialize<IEnumerable<Categoria>>(resp, optins);
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            string resp = await _httpCliente.GetStringAsync($"Categoria");
+            return JsonSerializer.Deserialize<IEnumerable<Categoria>>(resp, options);
+
 
         }
     }
+
 }
+

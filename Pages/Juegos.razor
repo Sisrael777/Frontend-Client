@@ -1,9 +1,83 @@
 ﻿@page "/Juego"
+@using Models
+@using Services
 
-<PageTitle>Juegos</PageTitle>
+@inject IProductoServices ProductoService
+@inject IConsolaServices ConsolaService
+@inject ICategoriaServices CategoriaService 
 
-<h3>Juegos</h3>
 
+<PageTitle>Consolas</PageTitle>
+<MudContainer Height="100%" Width="100%">
+    
+    <div style="display: flex; align-items: center; padding:10px">
+        <MudLink Href="/">Home</MudLink>
+        <MudText style="margin-left: 10px;">/  Productos</MudText>
+    </div>
+
+    @if (productos == null)
+    {
+        <MudSkeleton />
+        <MudSkeleton SkeletonType="SkeletonType.Circle" Width="50px" Height="50px" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="200px" Height="110px" />
+    }
+    else
+    {
+        <MudGrid>
+            @foreach (var item in productos)
+            {
+                
+                <MudItem xs="12" sm="10" md="6" lg="4">
+                    <MudCard>
+                        <MudCardHeader Class="blue darken-4">
+
+                            <CardHeaderContent>
+                                <MudText Style="color:white" Typo="Typo.h6">@item.Nombre</MudText>
+
+                                <MudText Style="color:white" Typo="Typo.body2">
+                                    @foreach (var categoria in categorias)
+                                    {
+                                        @if (categoria.Id == item.IdCategoria)
+                                        {
+                                            @categoria.Nombre
+                                        }
+                                    }
+                                </MudText>
+                            </CardHeaderContent>
+
+                        </MudCardHeader>
+                        <MudCardMedia Image="@item.Imagen" Height="250" />
+                        <MudText Typo="Typo.body2">
+                            @foreach (var consola in consolas)
+                            {
+                                @if (consola.Id == item.IdConsola)
+                                {
+                                    @consola.Nombre
+                                }
+                            }
+                        </MudText>
+                        <MudText Typo="Typo.body2">@item.Descripcion</MudText>
+                        <MudCardActions>
+                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+                            <MudButton Link="@($"/detalles/{item.Id}")" Variant="Variant.Outlined" Color="Color.Success">Detalles</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+</MudContainer>
 @code {
 
+    IEnumerable<Producto> productos = new List<Producto>();
+     IEnumerable<Categoria> categorias = new List<Categoria>();
+    IEnumerable<Consola> consolas = new List<Consola>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        productos = await ProductoService.GetAll();
+        consolas = await ConsolaService.GetAll();
+        categorias = await CategoriaService.GetAll();
+    }
 }

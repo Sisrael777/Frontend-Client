@@ -35,7 +35,6 @@ else
     IEnumerable<Categoria> categorias = new List<Categoria>();
     protected override async Task OnInitializedAsync()
     {
-        // categorias = await CategoriaService.GetAll();
+         categorias = await CategoriaService.GetAll();
     }
 }
- 

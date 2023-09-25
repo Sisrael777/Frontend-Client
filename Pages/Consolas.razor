@@ -5,35 +5,53 @@
 @inject IConsolaServices ConsolaService
 
 <PageTitle>Consolas</PageTitle>
+<MudContainer Height="100%" Width="100%">
+   
+    <div style="display: flex; align-items: center; padding:10px">
+        <MudLink Href="/">Home</MudLink>
+        <MudText style="margin-left: 10px;">/  Consolas</MudText>
+    </div>
 
-<MudText Typo="Typo.h4">Consolas</MudText>
-@if (consolas == null)
-{
-    <p>Cargando...</p>
-}
-else
-{
-    <MudGrid>
-        @foreach (var item in consolas)
-        {
-            <MudItem xs="12" sm="10" md="6" lg="4">
-                <MudCard>
-                    <MudCardHeader Class="blue lighten-1">
-                        <CardHeaderContent>
-                            <MudText Typo="Typo.h6">@item.Nombre</MudText>
-                        </CardHeaderContent>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <MudImage>@item.Imagen</MudImage>
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudButton Link="@($"/detalles/{item.Id}")" Variant="Variant.Outlined" Color="Color.Success">Detalles</MudButton>
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
-        }
-    </MudGrid>
-}
+    @if (consolas == null)
+    {
+        <MudSkeleton />
+        <MudSkeleton SkeletonType="SkeletonType.Circle" Width="50px" Height="50px" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="200px" Height="110px" />
+    }
+    else
+    {
+        <MudGrid>
+            @foreach (var item in consolas)
+            {
+                <MudItem xs="12" sm="10" md="6" lg="4">
+                    <MudCard>
+                        <MudCardHeader Class="blue darken-4">
+                            
+                            <CardHeaderContent>
+                                <MudText  Style="color:white" Typo="Typo.h6">@item.Nombre</MudText>
+                                <MudText Style="color:white" Typo="Typo.body2">@item.Serie</MudText>
+                            </CardHeaderContent>
+                           
+                        </MudCardHeader>
+                        <MudCardMedia Image="@item.Imagen" Height="250" />
+                        <MudCardContent>
+                            <MudText Typo="Typo.body2">@item.Fabricante™ @item.AñodeLanzamiento</MudText>
+                            <MudText  Typo="Typo.body2">@item.Descripcion</MudText>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+                            <MudButton Link="@($"/detalles/{item.Id}")" Variant="Variant.Outlined" Color="Color.Success">Detalles</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+</MudContainer>
+
+
+
 
 @code {
     IEnumerable<Consola> consolas = new List<Consola>();
