@@ -21,8 +21,25 @@ else
                 <MudCardContent>
                     <MudText Typo="Typo.h6" Class="mb-4 text-center">@producto.Nombre</MudText>
                     <MudText Typo="Typo.body2">Precio: $@producto.Precio</MudText>
-                    <MudText Typo="Typo.body2">Consola: @consola.Nombre</MudText>
-                    <MudText Typo="Typo.body2">Consola: @categoria.Nombre</MudText>
+                    <MudText Typo="Typo.body2">
+                        @foreach (var consola in consolas)
+                        {
+                            @if (consola.Id == producto.IdConsola)
+                            {
+                                @consola.Nombre
+                            }
+                        }
+                    </MudText>
+                    <MudText  Typo="Typo.body2">
+                        @foreach (var categoria in categorias)
+                        {
+                            @if (categoria.Id == producto.IdCategoria)
+                            {
+                                @categoria.Nombre
+                            }
+                        }
+                    </MudText>
+                    
                     <MudText Typo="Typo.body2">Descripción: @producto.Descripcion</MudText>
                 </MudCardContent>
             </div>
@@ -43,19 +60,17 @@ else
     public int id { get; set; }
 
     Producto producto = new Producto();
-    
-    Consola consola = new Consola();
-    Categoria categoria = new Categoria();
+    IEnumerable<Categoria> categorias = new List<Categoria>();
+    IEnumerable<Consola> consolas = new List<Consola>();
 
 
     protected override async Task OnInitializedAsync()
     {
         if (id > 0)
             producto = await ProductoService.GetById(id);
-             if (id > 0)
-            consola = await ConsolaService.GetById(id);
-        if (id > 0)
-            categoria = await CategoriaService.GetById(id);
+      
+            consolas = await ConsolaService.GetAll();
+        categorias = await CategoriaService.GetAll();
 
     }
 }
