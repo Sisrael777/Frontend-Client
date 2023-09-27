@@ -4,26 +4,32 @@
 @using Services
 @inject IConsolaServices ConsolaService
 
-<MudText Typo="Typo.h5">Detalles del Consola</MudText>
+<MudText Typo="Typo.h5" Class="text-center mb-4">Detalles de la Consola</MudText>
 
 @if (consola == null)
 {
-    <p><em>Cargando...</em></p>
+    <p class="text-center"><em>Cargando...</em></p>
 }
 else
 {
     <MudCard>
-        <MudCardHeader Class="blue lighten-2">
-            <CardHeaderContent>
-                <MudText Typo="Typo.h6">@consola.Nombre</MudText>
-            </CardHeaderContent>
-        </MudCardHeader>
-        <MudCardContent>
-            <MudText Typo="Typo.body2">@consola.Precio</MudText>
-        </MudCardContent>
-        <MudCardActions Class="center">
-            <img src="@consola.Imagen" alt="@consola.Nombre" Elevation="25" Class="rounded-lg" width="60%" height="auto" />
-        </MudCardActions>
+        <div style="display: flex; margin: 5px;">
+            <div style="flex: 1;">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6" Class="mb-4 text-center">@consola.Nombre</MudText>
+                    <MudText Typo="Typo.body2">Año de Lanzamiento: @consola.AñodeLanzamiento</MudText>
+                    <MudText Typo="Typo.body2">Fabricante: @consola.Fabricante</MudText>
+                    <MudText Typo="Typo.body2">Descripción: @consola.Descripcion</MudText>
+                    <MudText Typo="Typo.body2">Serie: @consola.Serie</MudText>
+                    <MudText Typo="Typo.body2">Precio: $@consola.Precio</MudText>
+                </MudCardContent>
+            </div>
+            <div style="flex: 1;">
+                <MudCardActions Class="center">
+                    <img src="@consola.Imagen" alt="@consola.Nombre" Elevation="25" Class="rounded-lg" width="60%" height="auto" />
+                </MudCardActions>
+            </div>
+        </div>
     </MudCard>
 }
 

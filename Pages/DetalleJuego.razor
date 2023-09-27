@@ -1,66 +1,61 @@
-﻿@page "/Juego/{id:int}"
+﻿﻿
+@page "/Juego/{id:int}"
 @using Models
 @using Services
 @inject IProductoServices ProductoService
 @inject IConsolaServices ConsolaService
 @inject ICategoriaServices CategoriaService
 
-<MudContainer Class="nintendo-card">
-    <MudText Class="nintendo-title">Detalles de Juego</MudText>
 
-    @if (producto == null)
-    {
-        <p><em>Cargando...</em></p>
-    }
-    else
-    {
-        <div class="nintendo-game-details">
-            <div class="nintendo-game-image">
-                <img src="@producto.Imagen" alt="@producto.Nombre" class="rounded-lg" />
+<MudText Typo="Typo.h5" Class="text-center mb-4">Detalles del Juego</MudText>
+
+@if (producto == null)
+{
+    <p class="text-center"><em>Cargando...</em></p>
+}
+else
+{
+    <MudCard>
+        <div style="display: flex; margin: 5px;">
+            <div style="flex: 1;">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6" Class="mb-4 text-center">@producto.Nombre</MudText>
+                    <MudText Typo="Typo.body2">Precio: $@producto.Precio</MudText>
+                    <MudText Typo="Typo.body2">Consola: @consola.Nombre</MudText>
+                    <MudText Typo="Typo.body2">Consola: @categoria.Nombre</MudText>
+                    <MudText Typo="Typo.body2">Descripción: @producto.Descripcion</MudText>
+                </MudCardContent>
             </div>
-            <div class="nintendo-game-content">
-                <MudText Typo="Typo.h5">@producto.Nombre</MudText>
-                <MudText Typo="Typo.h5">@consola.Nombre</MudText>
-                <MudText Typo="Typo.h5">@categoria.Nombre</MudText>
-                <MudText Class="nintendo-description">@producto.Descripcion</MudText>
-                <MudButton Href="/" Variant="Variant.Text" Color="Color.Primary">Volver</MudButton>
+            <div style="flex: 1;">
+                <MudCardActions Class="center">
+                    <img src="@producto.Imagen" alt="@producto.Nombre" Elevation="25" Class="rounded-lg" width="100%" height="100%" />
+                </MudCardActions>
             </div>
         </div>
-    }
-</MudContainer>
-<style>
-    .nintendo-game-details {
-        display: flex;
-        justify-content: space-between;
-    }
+    </MudCard>
+}
 
-    .nintendo-game-image {
-        flex: 1;
-        padding: 16px;
-    }
 
-    .nintendo-game-content {
-        flex: 2;
-        padding: 16px;
-    }
 
-</style>
 
 @code {
     [Parameter]
     public int id { get; set; }
 
     Producto producto = new Producto();
+    
     Consola consola = new Consola();
     Categoria categoria = new Categoria();
+
 
     protected override async Task OnInitializedAsync()
     {
         if (id > 0)
             producto = await ProductoService.GetById(id);
-        if (id > 0)
+             if (id > 0)
             consola = await ConsolaService.GetById(id);
-         if (id > 0)
-             categoria = await CategoriaService.GetById(id);
+        if (id > 0)
+            categoria = await CategoriaService.GetById(id);
+
     }
 }
