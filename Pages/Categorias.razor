@@ -1,12 +1,10 @@
-﻿@page "/Categoria"
+@page "/Categoria"
 @using Models
 @using Services
-
 @inject ICategoriaServices CategoriaService
 
- <PageTitle>Categoria</PageTitle>
+<MudText Typo="Typo.h4" Style="margin:10px">Categorias</MudText>
 
-<MudText Typo="Typo.h4">Categorias</MudText>
 @if (categorias == null)
 {
     <p>Cargando...</p>
@@ -18,83 +16,27 @@ else
         {
             <MudItem xs="12" sm="10" md="6" lg="4">
                 <MudCard>
-                    <MudCardHeader Class="blue lighten-1">
-                        <MudText Typo="Typo.h6" Class="mb-4 text-center">@item.Nombre</MudText>
-                    </MudCardHeader>
-
+                    <MudCardContent>
+                        <MudText>@item.Nombre</MudText>
+                        <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+                    </MudCardContent>
                     <MudCardActions>
-
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">Mas</MudButton>
                     </MudCardActions>
                 </MudCard>
             </MudItem>
+         
+
         }
     </MudGrid>
 }
-<style>
-    body {
-        padding: 0px;
-        margin: 0px;
-    }
 
-    .center {
-        display: flex;
-        height: 100vh;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .article-card {
-        width: 350px;
-        height: 220px;
-        border-radius: 12px;
-        overflow: hidden;
-        position: relative;
-        font-family: Arial, Helvetica, sans-serif;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-        transition: all 300ms;
-    }
-
-        .article-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-        }
-
-        .article-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .article-card .content {
-            box-sizing: border-box;
-            width: 100%;
-            position: absolute;
-            padding: 30px 20px 20px 20px;
-            height: auto;
-            bottom: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
-        }
-
-        .article-card .date,
-        .article-card .title {
-            margin: 0;
-        }
-
-        .article-card .date {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 4px;
-        }
-
-        .article-card .title {
-            font-size: 17px;
-            color: #fff;
-        }</style>
 
 @code {
     IEnumerable<Categoria> categorias = new List<Categoria>();
+
     protected override async Task OnInitializedAsync()
     {
-         categorias = await CategoriaService.GetAll();
+        categorias = await CategoriaService.GetAll();
     }
 }
