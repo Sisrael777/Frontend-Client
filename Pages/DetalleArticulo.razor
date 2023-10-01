@@ -13,11 +13,12 @@
 }
 else
 {
-    <MudCard Style="width: 100%; margin: 0; padding: 0;">
-        <div style="display: flex;">
+    <MudCard>
+        <div style="display: flex; margin: 5px;">
             <div style="flex: 1;">
                 <MudCardContent>
                     <MudText Typo="Typo.h6" Class="mb-4 text-center">@articulo.Nombre</MudText>
+                    <MudText Typo="Typo.body2">Precio: $@articulo.Precio</MudText>
                     <MudText Typo="Typo.body2">
                         @foreach (var consola in consolas)
                         {
@@ -27,6 +28,9 @@ else
                             }
                         }
                     </MudText>
+                    
+
+                    <MudText Typo="Typo.body2">Descripción: @articulo.Descripcion</MudText>
                 </MudCardContent>
             </div>
             <div style="flex: 1;">
@@ -35,10 +39,6 @@ else
                 </MudCardActions>
             </div>
         </div>
-        <MudCardContent>
-            <MudText Typo="Typo.body2">Precio: $@articulo.Precio</MudText>
-            <MudText Typo="Typo.body2">Descripción: @articulo.Descripcion</MudText>
-        </MudCardContent>
     </MudCard>
 }
 

@@ -48,7 +48,7 @@
 
                         </MudCardHeader>
                         <MudCardMedia Image="@item.Imagen" Height="250" />
-                        <MudText Typo="Typo.body2">
+                        <MudText Typo="Typo.body2" style=" margin:5px;">
                             @foreach (var consola in consolas)
                             {
                                 @if (consola.Id == item.IdConsola)
@@ -57,7 +57,7 @@
                                 }
                             }
                         </MudText>
-                        <MudText Typo="Typo.body2">@item.Descripcion</MudText>
+                        <MudText Typo="Typo.body2" style=" margin:5px;">@item.Descripcion</MudText>
                         <MudCardActions>
                             <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="@GetFavoriteColor(item)" OnClick="() => ToggleFavorite(item)" />
                             <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" OnClick="() => Compartir(item)" />

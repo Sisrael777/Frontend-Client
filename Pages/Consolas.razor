@@ -37,8 +37,8 @@
                         </MudCardHeader>
                         <MudCardMedia Image="@item.Imagen" Height="250" />
                         <MudCardContent>
-                            <MudText Typo="Typo.body2">@item.Fabricante™ @item.AñodeLanzamiento</MudText>
-                            <MudText Typo="Typo.body2">@item.Descripcion</MudText>
+                            <MudText Typo="Typo.body2" style=" margin:5px; text-transform:uppercase; font-weight:bold">@item.Fabricante™ @item.AñodeLanzamiento</MudText>
+                            <MudText Typo="Typo.body2" style=" margin:5px;">@item.Descripcion</MudText>
                         </MudCardContent>
                         <MudCardActions>
                             <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="@GetFavoriteColor(item)" OnClick="() => ToggleFavorite(item)" />
