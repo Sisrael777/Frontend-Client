@@ -26,6 +26,16 @@
                 animation-name: bounceOut;
                 animation-fill-mode: forwards;
             }
+
+            .carta {
+                width: 100%;
+                height: 100%;
+                transition: transform 0.3s;
+            }
+
+                .carta:hover {
+                    transform: translate(10px, 10px);
+                }
         </style>
 
         <MudCarousel Class="mud-width-full" Style="height:350px;" TData="object" AutoCycle="true" CycleInterval="3000">
@@ -86,7 +96,7 @@
     </MudButtonGroup>
 </MudContainer>
 <MudContainer Height="50%" Width="100%" Style="margin-top: 30px; display: flex; justify-content: space-between; border: none; padding: 10px;">
-    <MudCard Width="30%" Margin="0 0 10px 0">
+    <MudCard Width="30%" Margin="0 0 10px 0"   Class="carta">
         <MudCardHeader>
             <CardHeaderContent>
                 <MudText Typo="Typo.h6">Regala Super Mario!</MudText>
@@ -103,7 +113,7 @@
         </MudCardActions>
     </MudCard>
 
-    <MudCard Width="30%" Margin="0 0 10px 0">
+        <MudCard Width="30%" Margin="0 0 10px 0" Class="carta">
         <MudCardHeader>
             <CardHeaderContent>
                 <MudText Typo="Typo.h6">The Legend of Zelda</MudText>
@@ -120,7 +130,7 @@
         </MudCardActions>
     </MudCard>
 
-    <MudCard Width="30%">
+        <MudCard Width="30%" Class="carta">
         <MudCardHeader>
             <CardHeaderContent>
                 <MudText Typo="Typo.h6">Mando de Nintendo 64</MudText>
@@ -139,8 +149,8 @@
 </MudContainer>
 
 <MudContainer Height="300px" Width="100%" Style="margin-top: 100px; display: flex; justify-content: center; border: none; margin: 10px; " BackgroundColor="lightgray">
-    
-    <MudCard Width="40%" Style="margin-top: 10px; margin:10px">
+
+    <MudCard Width="40%" Style="margin-top: 10px; margin:10px" Class="carta">
         <MudCardMedia Image="images/DK.jpg" Height="200" />
         <MudCardContent>
             <MudText Typo="Typo.h5">Mario vs. Donkey Kong™</MudText>
@@ -153,7 +163,7 @@
         </MudCardActions>
     </MudCard>
 
-    <MudCard Width="40%" Style="margin-top: 10px; margin:10px">
+    <MudCard Width="40%" Style="margin-top: 10px; margin:10px" Class="carta">
         <MudCardMedia Image="images/another.jpg" Height="200" />
         <MudCardContent>
             <MudText Typo="Typo.h5">Another Code Recollection™</MudText>

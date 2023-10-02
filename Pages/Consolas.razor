@@ -7,7 +7,26 @@
 @inject NavigationManager NavigationManager
 
 <PageTitle>Consolas</PageTitle>
-<MudContainer Height="100%" Width="100%">
+
+<style>
+    .Carta {
+        width: 100%;
+        height: 100%;
+        box-shadow: 5px 6px 7px rgb(0, 0, 205);
+    }
+
+    .Carta {
+        width: 100%;
+        height: 100%;
+        transition: transform 0.3s;
+    }
+
+        .Carta:hover {
+            transform: translate(10px, 10px);
+        }
+
+</style>
+<MudContainer Height="100%" Width="100%" Style="box-shadow: 8px 9px 10px rgba(9, 8, 10, 8.5);">
 
     <div style="display: flex; align-items: center; padding:10px">
         <MudLink Href="/">Home</MudLink>
@@ -26,7 +45,7 @@
             @foreach (var item in consolas)
             {
                 <MudItem xs="12" sm="10" md="6" lg="4">
-                    <MudCard>
+                    <MudCard Class="Carta">
                         <MudCardHeader Class="blue darken-4">
 
                             <CardHeaderContent>
