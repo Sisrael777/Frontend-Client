@@ -8,14 +8,15 @@
 @inject IJSRuntime JSRuntime
 
 
-<PageTitle>Consolas</PageTitle>
+<PageTitle>Juegos</PageTitle>
 <MudContainer Height="100%" Width="100%" Style="box-shadow: 8px 9px 10px rgba(9, 8, 10, 8.5);">
     <style>
         .Carta {
             width: 100%;
             height: 100%;
-            box-shadow: 5px 6px 7px rgb(0, 0, 205);
+            box-shadow: 5px 6px 7px 0px rgb(0, 0, 205),0px 0px 10px 5px rgb(0, 0, 0);
         }
+
 
         .Carta {
             width: 100%;
@@ -47,37 +48,48 @@
         <MudGrid >
             @foreach (var item in productos)
             {
-                
+
                 <MudItem xs="12" sm="10" md="6" lg="4">
-                    <MudCard class="Carta">
-                        <MudCardHeader Class="blue darken-4">
-
+                    <MudCard class="Carta" Style="border-radius: 20px;" @onclick="ToggleDescription">
+                       
+                        <MudCardHeader>
                             <CardHeaderContent>
-                                <MudText Style="color:white" Typo="Typo.h6" >@item.Nombre</MudText>
-
-                                <MudText Style="color:white" Typo="Typo.body2">
-                                    @foreach (var categoria in categorias)
-                                    {
-                                        @if (categoria.Id == item.IdCategoria)
+                                <MudCardHeader Class="blue darken-4">
+                                    <CardHeaderContent>
+                                        <MudText Style="color:white" Typo="Typo.h6">@item.Nombre</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                                <MudCardMedia Image="@item.Imagen" Height="250" />
+                                @if (showDescription)
+                                {
+                                    <MudText Typo="Typo.body2" style=" margin:5px; text-transform:uppercase; font-weight:bold">
+                                        @foreach (var categoria in categorias)
                                         {
-                                            @categoria.Nombre
+                                            @if (categoria.Id == item.IdCategoria)
+                                            {
+                                                @categoria.Nombre
+                                            }
+                                        }
+                                    </MudText>
+                                    <MudText Typo="Typo.body2" style=" margin:5px;">@item.Descripcion</MudText>
+
+                     
+                                    
+
+                                }
+                                <MudText Typo="Typo.body2" style=" margin:5px; text-transform:uppercase; font-weight:bold">
+                                    @foreach (var consola in consolas)
+                                    {
+                                        @if (consola.Id == item.IdConsola)
+                                        {
+                                            @consola.Nombre
                                         }
                                     }
                                 </MudText>
                             </CardHeaderContent>
-
                         </MudCardHeader>
-                        <MudCardMedia Image="@item.Imagen" Height="250" />
-                        <MudText Typo="Typo.body2" style=" margin:5px; text-transform:uppercase; font-weight:bold">
-                            @foreach (var consola in consolas)
-                            {
-                                @if (consola.Id == item.IdConsola)
-                                {
-                                    @consola.Nombre
-                                }
-                            }
-                        </MudText>
-                        <MudText Typo="Typo.body2" style=" margin:5px;">@item.Descripcion</MudText>
+                       
+
                         <MudCardActions>
                             <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="@GetFavoriteColor(item)" OnClick="() => ToggleFavorite(item)" />
                             <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" OnClick="() => Compartir(item)" />
@@ -85,6 +97,7 @@
                         </MudCardActions>
                     </MudCard>
                 </MudItem>
+
             }
         </MudGrid>
     }
@@ -130,5 +143,12 @@
             text = producto.Nombre,
             url = urlDetalle
         });
+    }
+
+    private bool showDescription = false;
+
+    private void ToggleDescription()
+    {
+        showDescription = !showDescription;
     }
 }
