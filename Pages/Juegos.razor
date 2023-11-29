@@ -50,8 +50,8 @@
             {
 
                 <MudItem xs="12" sm="10" md="6" lg="4">
-                    <MudCard class="Carta" Style="border-radius: 20px;" @onclick="ToggleDescription">
-                       
+                    <MudCard class="Carta" Style="border-radius: 20px;" @onclick="ToggleDescription" title="Haz clic para ver la descrpcion">
+
                         <MudCardHeader>
                             <CardHeaderContent>
                                 <MudCardHeader Class="blue darken-4">
@@ -62,7 +62,7 @@
                                 <MudCardMedia Image="@item.Imagen" Height="250" />
                                 @if (showDescription)
                                 {
-                                    <MudText Typo="Typo.body2" style=" margin:5px; text-transform:uppercase; font-weight:bold">
+                                    <MudText Typo="Typo.body2" style="margin:5px; text-transform:uppercase; font-weight:bold">
                                         @foreach (var categoria in categorias)
                                         {
                                             @if (categoria.Id == item.IdCategoria)
@@ -71,13 +71,9 @@
                                             }
                                         }
                                     </MudText>
-                                    <MudText Typo="Typo.body2" style=" margin:5px;">@item.Descripcion</MudText>
-
-                     
-                                    
-
+                                    <MudText Typo="Typo.body2" style="margin:5px;">@item.Descripcion</MudText>
                                 }
-                                <MudText Typo="Typo.body2" style=" margin:5px; text-transform:uppercase; font-weight:bold">
+                                <MudText Typo="Typo.body2" style="margin:5px; text-transform:uppercase; font-weight:bold">
                                     @foreach (var consola in consolas)
                                     {
                                         @if (consola.Id == item.IdConsola)
@@ -88,7 +84,6 @@
                                 </MudText>
                             </CardHeaderContent>
                         </MudCardHeader>
-                       
 
                         <MudCardActions>
                             <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="@GetFavoriteColor(item)" OnClick="() => ToggleFavorite(item)" />
@@ -96,6 +91,7 @@
                             <MudButton Link="@($"/Juego/{item.Id}")" Variant="Variant.Outlined" Color="Color.Success">Detalles</MudButton>
                         </MudCardActions>
                     </MudCard>
+
                 </MudItem>
 
             }
